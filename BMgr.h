@@ -8,33 +8,46 @@
  */
 #ifndef __BMGR_H__
 #define __BMGR_H__
-
+#include<iostream>
 #include "buffer.h"
 
 class BMgr
 {
     public:
+        int hitCount;
+        int numIO;
+        bFrame buf[DEFBUFSIZE];
+
         BMgr();
         // Interface Functions
-        int FixPage(int page_id, int port);
-        void FixNewPage();
-        int UnfixPage(int page_id);
-        int NumFreeFrames();
+        int fixPage(int page_id, int prot);
+        void fixNewPage();
+        int unfixPage(int page_id);
+        void readPage(int page_id);
+        void writePage(int page_id);
         
         // Internal Functions
-        int SelectVictim();
-        int Hash(int page_id);
-        void RemoveBCB(BCB * ptr, int page_id);
-        void RemoveLRUEle(int frid);
-        void SetDirty(int frame_id);
-        void UnsetDirty(int Frame_id);
-        void WriteDirtys();
-        void PrintFrame(int frame_id);
+        int numFreeFrames();
+        int allocateNewFreeFrame(int page_id, int prot);
+        BCB * selectVictim();
+        BCB * getFramefromPageid(int page_id);
+        //void removeBCB(BCB * ptr, int page_id);
+        //void removeLRUEle(int frid);
+        //void setDirty(int frame_id);
+        //void unsetDirty(int Frame_id);
+        //void writeDirtys();
+        //void printFrame(int frame_id);
+
 
     private:
         // Hash Table
+        int numofFreeFrames;
         int ftop[DEFBUFSIZE];
         BCB * ptof[DEFBUFSIZE];
+        LRUnode * LRUheader;
+        LRUnode * LRUtail;
+
+        int hash(int page_id);
 };
 
 

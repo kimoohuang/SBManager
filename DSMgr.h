@@ -8,21 +8,22 @@
  */
 #ifndef __DSMGR_H__
 #define __DSMGR_H__
+
 #include "buffer.h"
 
 class DSMgr{
     public:
         DSMgr();
-        int OpenFile(string filename);
-        int CloseFile();
-        bFrame ReadPage(int page_id);
-        int WritePage(int frame_id, bFrame frm);
-        int Seek(int offset, int pos);
+        int openFile(const char* filename);
+        int closeFile();
+        bFrame readPage(int page_id);
+        int writePage(int frame_id, bFrame frm);
+        int seek(int offset, int pos);
         FILE * getFile();
-        void IncNumPages();
-        int GetNumPages();
-        void SetUse(int index, int use_bit);
-        int GetUse(int indes);
+        void incNumPages();
+        int getNumPages();
+        void setUse(int index, int use_bit);
+        int getUse(int indes);
     private:
         FILE *curFile;
         int numPages;
